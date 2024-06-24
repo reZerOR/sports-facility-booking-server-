@@ -1,14 +1,13 @@
 import { Router } from "express";
-import globalErrorHandler from "../middleware/globalErrorHandler";
-
+import { AuthRoutes } from "../module/auth/auth.route";
 
 const router = Router();
 
 const moduleRoutes = [
-{
-path: '/auth',
-route: globalErrorHandler
-}
+  {
+    path: "/auth",
+    route: AuthRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
