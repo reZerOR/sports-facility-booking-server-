@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Document, Model } from "mongoose";
 
 export interface TUser{
   name: string;
@@ -7,10 +7,13 @@ export interface TUser{
   phone: string;
   role: "admin" | "user";
   address: string;
-};
+}
 
-
-export interface UserMethods extends Model<TUser>{
-    //instance methods for checking if the user exist
-    isUserExistsByEmail(email: string): Promise<TUser>;
+export interface UserMethods extends Model<TUser> {
+  //instance methods for checking if the user exist
+  isUserExistsByEmail(email: string): Promise<TUser>;
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string
+  ): Promise<boolean>;
 }

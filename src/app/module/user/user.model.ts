@@ -3,7 +3,7 @@ import { TUser, UserMethods } from "./user.interface";
 import bcrypt from "bcrypt";
 import config from "../../config";
 
-const userSchema = new Schema<TUser, UserMethods>({
+const userSchema = new Schema<TUser, UserMethods, Document>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -21,15 +21,19 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-
 // userSchema.post('save', function () {
 //     this.password = ''
 //   });
 
-
 userSchema.statics.isUserExistsByEmail = async function (email: string) {
-    return await User.findOne({ email }).select('+password');
-  };
-  
+  return await User.findOne({ email }).select("+password");
+};
 
-export const User = model<TUser, UserMethods>("User", userSchema)
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
+
+export const User = model<TUser, UserMethods>("User", userSchema);
