@@ -1,6 +1,6 @@
 import { Document, Model } from "mongoose";
 
-export interface TUser{
+export interface TUser extends Document{
   name: string;
   email: string;
   password: string;

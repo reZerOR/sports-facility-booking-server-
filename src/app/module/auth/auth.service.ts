@@ -6,7 +6,6 @@ import { TAuth } from "./auth.interface";
 import { createToken } from "./auth.utils";
 import config from "../../config";
 
-
 const createUserIntoDB = async (payload: TUser) => {
   const user = await User.isUserExistsByEmail(payload.email);
   if (user) {
@@ -26,13 +25,16 @@ const checkLoginUser = async (paylod: TAuth) => {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
 
-  if (!(await User.isPasswordMatched(paylod?.password, user?.password))) {
+  if (!(await User.isPasswordMatched(paylod?.password, user?.password!))) {
     throw new AppError(httpStatus.FORBIDDEN, "Password is incorrect");
   }
 
+  const userObject: Partial<TUser> = user.toObject();
+  delete userObject.password;
+
   const jwtPayload = {
-    userId: user.email,
-    role: user.role,
+    userId: user.email!,
+    role: user.role!,
   };
 
   const accesToken = createToken(
@@ -40,10 +42,13 @@ const checkLoginUser = async (paylod: TAuth) => {
     config.jwt_access_secret as string
   );
 
-  const userObject = user.toObject();
-  delete userObject.password;
+  return {
+    accesToken,
+    user: userObject,
+  };
 };
 
 export const AuthServices = {
   createUserIntoDB,
+  checkLoginUser,
 };
