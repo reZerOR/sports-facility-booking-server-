@@ -1,6 +1,7 @@
 import { Document, Model } from "mongoose";
+import { USER_ROLE } from "./user.contstant";
 
-export interface TUser extends Document{
+export interface TUser extends Document {
   name: string;
   email: string;
   password: string;
@@ -17,3 +18,5 @@ export interface UserMethods extends Model<TUser> {
     hashedPassword: string
   ): Promise<boolean>;
 }
+
+export type TuserRole = keyof typeof USER_ROLE;

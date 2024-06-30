@@ -25,18 +25,21 @@ const checkLoginUser = async (paylod: TAuth) => {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
 
+  // checking if password matched or not
   if (!(await User.isPasswordMatched(paylod?.password, user?.password!))) {
     throw new AppError(httpStatus.FORBIDDEN, "Password is incorrect");
   }
 
+  // deleting password field from user
   const userObject: Partial<TUser> = user.toObject();
   delete userObject.password;
 
   const jwtPayload = {
-    userId: user.email!,
+    userEmail: user.email!,
     role: user.role!,
   };
 
+  // creating token for the user
   const accesToken = createToken(
     jwtPayload,
     config.jwt_access_secret as string
