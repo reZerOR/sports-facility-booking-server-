@@ -26,3 +26,6 @@ const bookingValidationSchema = z.object({
       .regex(timeRegex, { message: "Invalid time format, should be HH:MM" }),
   }),
 });
+
+
+export const BookingValidation = {bookingValidationSchema}
