@@ -33,6 +33,7 @@ export const auth = (...requiredRoles: TuserRole[]) => {
         "You are not authorized  hi!"
       );
     }
+    req.user = user;
     next();
   });
 };

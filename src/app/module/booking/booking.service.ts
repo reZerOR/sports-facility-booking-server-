@@ -5,14 +5,14 @@ import { TBooking } from "./booking.interface";
 import { calculatePayableAmount } from "./booking.utiles";
 import { TFacility } from "../facility/facility.interface";
 
-const createBookingIntoDB = async (paylod: Partial<TBooking>) => {
+const createBookingIntoDB = async (paylod: Partial<TBooking>, userId: string) => {
   const { facility, startTime, endTime, date } = paylod;
   // check availability
   // find facility exist
   const isFacilityExist = await Facility.findOne({
     _id: paylod.facility,
     isDeleted: false,
-  }).exec();
+  });
   if (!isFacilityExist) {
     throw new AppError(httpStatus.NOT_FOUND, "Facility not found");
   }
