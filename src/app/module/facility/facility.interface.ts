@@ -7,7 +7,3 @@ export type TFacility = {
   location: string;
   isDeleted: boolean;
 };
-
-export interface FacilityMethods extends Model<TFacility> {
-  isFacilityExistsById(id: string): Promise<TFacility>;
-}
