@@ -17,13 +17,13 @@ const createBookingIntoDB = async (paylod: Partial<TBooking>, userId: string) =>
     throw new AppError(httpStatus.NOT_FOUND, "Facility not found");
   }
 
+  // calculate payable amount
   const payableAmount = calculatePayableAmount(
     startTime!,
     endTime!,
     isFacilityExist.pricePerHour
   );
   return payableAmount;
-  // calculate payable amount
 };
 
 export const BookingServices = {
