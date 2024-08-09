@@ -60,7 +60,7 @@ const createBookingIntoDB = async (
   return createBooking;
 };
 const allBookingFromDB = async() => {
-  const bookings = await Booking.find().populate("user").populate("facility");
+  const bookings = await Booking.find().populate("user", '-password').populate("facility");
   return bookings
 }
 
