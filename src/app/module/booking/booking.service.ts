@@ -59,12 +59,31 @@ const createBookingIntoDB = async (
   });
   return createBooking;
 };
-const allBookingFromDB = async() => {
-  const bookings = await Booking.find().populate("user", '-password').populate("facility");
-  return bookings
-}
+const allBookingFromDB = async () => {
+  const bookings = await Booking.find()
+    .populate("user", "-password")
+    .populate("facility");
+  return bookings;
+};
+const allUserBookingFromDB = async (user: string) => {
+  const bookings = await Booking.find({ user }).populate("facility");
+  return bookings;
+};
+const cancelBookingFromDB = async (user: string, id: string) => {
+  const bookings = await Booking.findOneAndUpdate(
+    { _id: id, user },
+    { isBooked: "canceled" },
+    {
+      new: true,
+      runValidators: true
+    }
+  ).populate("facility");
+  return bookings;
+};
 
 export const BookingServices = {
   createBookingIntoDB,
-  allBookingFromDB
+  allBookingFromDB,
+  allUserBookingFromDB,
+  cancelBookingFromDB,
 };

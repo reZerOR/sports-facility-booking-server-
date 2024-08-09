@@ -30,7 +30,32 @@ const allBookings = catchAsync(async (req, res) => {
   });
 });
 
+const allUserBookings = catchAsync(async (req, res) => {
+  const result = await BookingServices.allUserBookingFromDB(req.user.id);
+  const isDataAvailable = result.length !== 0;
+  sendResponse(res, {
+    success: isDataAvailable,
+    statusCode: isDataAvailable ? httpStatus.OK : httpStatus.NOT_FOUND,
+    message: isDataAvailable
+      ? "Bookings retrieved successfully"
+      : "No Data Found",
+    data: result,
+  });
+});
+
+const calcelBooking = catchAsync(async (req, res)=> {
+  const result = await BookingServices.cancelBookingFromDB(req.user.id, req.params.id)
+  sendResponse(res, {
+    success: result !== null,
+    statusCode: result ? httpStatus.OK : httpStatus.NOT_FOUND,
+    message: result?"Booking cancelled successfully": "Booking not found or user not booked this booking",
+    data: result,
+  });
+})
+
 export const BookingController = {
   createBooking,
-  allBookings
+  allBookings,
+  allUserBookings,
+  calcelBooking
 };
