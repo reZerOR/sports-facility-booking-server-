@@ -10,7 +10,7 @@ const bookingSchema = new Schema<TBooking>({
   facility: {
     type: Schema.Types.ObjectId,
     required: [true, "Facility id required"],
-    ref: "Facility",
+    ref: "Facilitys",
   },
   date: {
     type: String,

@@ -21,9 +21,10 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// userSchema.post('save', function () {
-//     this.password = ''
-//   });
+userSchema.pre("find", function (next) {
+  this.select("-password");
+  next();
+});
 
 userSchema.statics.isUserExistsByEmail = async function (email: string) {
   return await User.findOne({ email });

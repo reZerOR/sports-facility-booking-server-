@@ -1,3 +1,4 @@
+import moment from "moment";
 import { z } from "zod";
 const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
 const bookingValidationSchema = z.object({
@@ -11,7 +12,10 @@ const bookingValidationSchema = z.object({
         invalid_type_error: "Date must be string",
         required_error: "Date is required",
       })
-      .date("The provided date is not valid"),
+      .date("The provided date is not valid")
+      .refine(date=>{
+        return moment(date).isSameOrAfter(moment(), "day")
+      }, {message: 'Please provide a current or future date'}),
     startTime: z
       .string({
         invalid_type_error: "startTime must be string",
