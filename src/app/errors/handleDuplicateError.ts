@@ -1,3 +1,4 @@
+import { MongooseError } from "mongoose";
 import { TErrorSource, TGenericErrorResponse } from "../interface/error";
 
 const handleDuplicateError = (err: any): TGenericErrorResponse => {
@@ -10,7 +11,7 @@ const handleDuplicateError = (err: any): TGenericErrorResponse => {
   const errorSources: TErrorSource = [
     {
       path: '',
-      message: `${extractedMessage} is already exists`,
+      message: err?.message
     },
   ];
 
@@ -18,7 +19,7 @@ const handleDuplicateError = (err: any): TGenericErrorResponse => {
 
   return {
     statusCode,
-    message: 'Invalid ID',
+    message: 'Duplicate Entry',
     errorSources,
   };
 };
