@@ -20,13 +20,13 @@ router.get(
 );
 router.get(
   "/user",
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.user),
   BookingController.allUserBookings
 );
 router.delete(
   "/:id",
   auth(USER_ROLE.user),
-  BookingController.calcelBooking
+  BookingController.cancelBooking
 );
 
 export const BookingRoutes = router;

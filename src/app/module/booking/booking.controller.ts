@@ -43,7 +43,7 @@ const allUserBookings = catchAsync(async (req, res) => {
   });
 });
 
-const calcelBooking = catchAsync(async (req, res)=> {
+const cancelBooking = catchAsync(async (req, res)=> {
   const result = await BookingServices.cancelBookingFromDB(req.user.id, req.params.id)
   sendResponse(res, {
     success: result !== null,
@@ -57,5 +57,5 @@ export const BookingController = {
   createBooking,
   allBookings,
   allUserBookings,
-  calcelBooking
+  cancelBooking
 };
