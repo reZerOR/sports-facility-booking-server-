@@ -25,7 +25,7 @@ router.get(
 );
 router.delete(
   "/:id",
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.user),
   BookingController.calcelBooking
 );
 

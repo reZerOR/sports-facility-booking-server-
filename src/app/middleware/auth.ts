@@ -11,7 +11,7 @@ export const auth = (...requiredRoles: TuserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = (req.headers.authorization as string).split(" ")[1];
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
+      throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
     }
 
     const decoded = jwt.verify(
@@ -30,7 +30,7 @@ export const auth = (...requiredRoles: TuserRole[]) => {
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        "You are not authorized  hi!"
+        "You have no access to this route"
       );
     }
     req.user = user;
