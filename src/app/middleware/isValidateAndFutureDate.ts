@@ -12,9 +12,6 @@ export const isValidAndFutureDate = (
   if (!date) {
    return next();
   }
-  console.log('2');
-  
-
   const format = "YYYY-MM-DD";
   const isValid = moment(date, format, true).isValid();
   if (!isValid) {

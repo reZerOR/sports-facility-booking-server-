@@ -1,15 +1,12 @@
 import moment from "moment";
 import { Booking } from "../booking/booking.model";
-import { isValidAndFutureDate } from "../../middleware/isValidateAndFutureDate";
 
 const checkAvailability = async (payload: string | undefined) => {
 
   const date = payload ? payload : moment().format("YYYY-MM-DD");
-  console.log(payload, date);
 
   // Fetch all bookings for the given date
   const bookings = await Booking.find({ date });
-  console.log(bookings);
 
   // Example logic to determine available time slots
   const allTimeSlots = [

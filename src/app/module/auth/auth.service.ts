@@ -8,9 +8,9 @@ import config from "../../config";
 
 const createUserIntoDB = async (payload: TUser) => {
   const user = await User.isUserExistsByEmail(payload.email);
-  // if (user) {
-  //   throw new AppError(httpStatus.BAD_REQUEST, "This email is already exists");
-  // }
+  if (user) {
+    throw new AppError(httpStatus.BAD_REQUEST, "This email is already exists");
+  }
 
   const createUser = await User.create(payload);
   const userObject: Partial<TUser> = createUser.toObject();
@@ -26,7 +26,7 @@ const checkLoginUser = async (paylod: TAuth) => {
   }
 
   // checking if password matched or not
-  if (!(await User.isPasswordMatched(paylod?.password, user?.password!))) {
+  if (!(await User.isPasswordMatched(paylod?.password, user.password!))) {
     throw new AppError(httpStatus.FORBIDDEN, "Password is incorrect");
   }
 

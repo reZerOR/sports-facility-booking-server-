@@ -2,9 +2,6 @@ import httpStatus from "http-status";
 import { catchAsync } from "../../utilities/catchAsync";
 import { sendResponse } from "../../utilities/sendResponse";
 import { FacilityService } from "./facility.service";
-import { send } from "process";
-import { Facility } from "./facility.model";
-import { date } from "zod";
 
 const createFacility = catchAsync(async (req, res) => {
   const result = await FacilityService.createFacilityIntoDB(req.body);
