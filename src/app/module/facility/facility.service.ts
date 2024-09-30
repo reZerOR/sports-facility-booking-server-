@@ -31,9 +31,14 @@ const geAllGacilityFromDB = async () => {
   const result = await Facility.find();
   return result;
 };
+const getFacilityByIdFromDB = async (id: string) => {
+  const result = await Facility.findById(id);
+  return result;
+};
 export const FacilityService = {
   createFacilityIntoDB,
   updateFacilityByIdIntoDB,
   DeleteFacilityByIdIntoDB,
   geAllGacilityFromDB,
+  getFacilityByIdFromDB,
 };

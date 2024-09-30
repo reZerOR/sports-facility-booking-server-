@@ -1,12 +1,13 @@
 import moment from "moment";
 import { Booking } from "../booking/booking.model";
 
-const checkAvailability = async (payload: string | undefined) => {
+const checkAvailability = async (payload: { date?: string, facilityId?: string }) => {
 
-  const date = payload ? payload : moment().format("YYYY-MM-DD");
+  const date = payload.date ? payload.date : moment().format("YYYY-MM-DD");
+  const facilityId = payload.facilityId;
 
-  // Fetch all bookings for the given date
-  const bookings = await Booking.find({ date });
+  // Fetch all bookings for the given date and facility
+  const bookings = await Booking.find({ date, facilityId });
 
   // Example logic to determine available time slots
   const allTimeSlots = [
@@ -17,12 +18,6 @@ const checkAvailability = async (payload: string | undefined) => {
     { startTime: "16:00", endTime: "18:00" },
   ];
   console.log(bookings.length);
-
-  // if(bookings.length === 0){
-  //     console.log('0');
-  //     return allTimeSlots
-  // }
-  // console.log('1');
 
   const availableTimeSlots = allTimeSlots.filter((slot) => {
     return !bookings.some(

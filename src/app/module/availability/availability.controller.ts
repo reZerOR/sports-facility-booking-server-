@@ -4,9 +4,10 @@ import { sendResponse } from "../../utilities/sendResponse";
 import { AvailabilityService } from "./availability.service";
 
 const availability = catchAsync(async (req, res, _next) => {
-  const result = await AvailabilityService.checkAvailability(
-    req.query.date as string
-  );
+  const result = await AvailabilityService.checkAvailability({
+    date: req.query.date as string,
+    facilityId: req.query.facilityId as string,
+  });
 
   sendResponse(res, {
     success: true,

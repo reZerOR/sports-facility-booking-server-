@@ -21,5 +21,6 @@ route.put(
   FacilityController.updateFacility
 );
 route.delete("/:id", auth(USER_ROLE.admin), FacilityController.delteFacility);
+route.get("/:id", FacilityController.getFacilityById);
 
 export const FacilityRoutes = route;
